@@ -1,18 +1,20 @@
 package com.example.domain;
 
 /**
- * Created by Ge.Mao
- * 2018/4/7 0:10
+ * http请求返回的最外层对象
+ * Created by Ge.Mao on 2018/4/7
  */
 public class Result<T> {
     /**
-     *  错误码
+     * 错误码
      */
     private Integer code;
+
     /**
      * 提示信息
      */
-    private  String msg;
+    private String msg;
+
     /**
      * 具体的内容
      */
@@ -40,14 +42,5 @@ public class Result<T> {
 
     public void setData(T data) {
         this.data = data;
-    }
-
-    @Override
-    public String toString() {
-        return "Result{" +
-                "code=" + code +
-                ", msg='" + msg + '\'' +
-                ", data=" + data +
-                '}';
     }
 }
