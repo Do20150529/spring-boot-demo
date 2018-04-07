@@ -14,7 +14,9 @@ public class User {
     private Integer id;
     private String name;
     private Integer age;
-    private Double money;
+
+    public User() {
+    }
 
     public Integer getId() {
         return id;
@@ -40,21 +42,12 @@ public class User {
         this.age = age;
     }
 
-    public Double getMoney() {
-        return money;
-    }
-
-    public void setMoney(Double money) {
-        this.money = money;
-    }
-
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
-                ", money=" + money +
                 '}';
     }
 }
