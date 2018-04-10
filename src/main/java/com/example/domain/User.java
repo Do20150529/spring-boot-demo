@@ -3,6 +3,7 @@ package com.example.domain;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
 
 /**
  * Created by Ge.Mao on 2018/4/7
@@ -13,6 +14,7 @@ public class User {
     @GeneratedValue
     private Integer id;
     private String name;
+    @Min(value = 18, message = "未成年")
     private Integer age;
 
     public User() {

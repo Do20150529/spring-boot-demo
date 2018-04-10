@@ -1,11 +1,18 @@
 package com.example.controller;
 
+import com.example.domain.Result;
 import com.example.domain.User;
 import com.example.repository.UserRepository;
+import com.example.service.UserService;
+import com.example.utils.ResultUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,8 +21,13 @@ import java.util.Optional;
  */
 @RestController
 public class UserController {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 查询所有用户列表
@@ -33,8 +45,12 @@ public class UserController {
      * @return
      */
     @PostMapping("/users")
-    public User userAdd(User user) {
-        return userRepository.save(user);
+    public Result<User> userAdd(@Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResultUtil.error(1, bindingResult.getFieldError().getDefaultMessage());
+        }
+
+        return ResultUtil.success(userRepository.save(user));
     }
 
     /**
@@ -43,8 +59,9 @@ public class UserController {
      * @return
      */
     @GetMapping("/users/{id}")
-    public Optional<User> getUserById(@PathVariable("id") Integer id) {
-        return userRepository.findById(id);
+    public void getUserById(@PathVariable("id") Integer id) throws Exception {
+//        return userRepository.findById(id);
+        userService.getAge(id);
     }
 
     /**
@@ -79,4 +96,13 @@ public class UserController {
     public void userDelete(@PathVariable Integer id) {
         userRepository.deleteById(id);
     }
+
+    /**
+     * 事务demo
+     */
+    @GetMapping("/two")
+    public void insertTwo() {
+        userService.insertTwo();
+    }
+
 }
